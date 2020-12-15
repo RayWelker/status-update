@@ -53,10 +53,10 @@ def get_job_details(execution_id, status_table, snakemake_table, sqs_queue_url, 
   status = item['Item']['status']
   if status == 'RESTORING':
     print('Checking if restoration has completed: %s' % execution_id)
-    s3_operations.get_s3_restore_status(s3_objects, s3_bucket, execution_id, snakemake_table, sqs_queue_url, receipt_handle)
+    s3_operations.get_s3_restore_status(s3_objects, s3_bucket, execution_id, status_table, sqs_queue_url, receipt_handle)
   elif status == 'COMPLETE':
     print('Restoration is complete for execution ID: %s' % execution_id)
-    print('Updating item status to READY for execution ID: %s in table: %s' % (execution_id, status_table))
+    print('Updating item status to READY for execution ID: %s in table: %s' % (execution_id, snakemake_table))
     populate_job_details(execution_id, snakemake_table)
     print('Removing message from SQS queue URL: %s' % sqs_queue_url)
     sqs_operations.delete_message(sqs_queue_url, receipt_handle)

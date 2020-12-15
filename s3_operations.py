@@ -4,7 +4,7 @@ import json
 import dynamodb_operations
 import sqs_operations
 
-def get_s3_restore_status(s3_objects, s3_bucket, execution_id, status_table, snakemake_table, sqs_queue_url, receipt_handle):
+def get_s3_restore_status(s3_objects, s3_bucket, execution_id, status_table, sqs_queue_url, receipt_handle):
     s3 = boto3.resource('s3')
     completed_list = []
     for x in s3_objects:
